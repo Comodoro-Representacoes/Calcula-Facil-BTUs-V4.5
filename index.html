@@ -100,16 +100,18 @@
 
     <script>
         function calcularBTU() {
-            var largura = parseFloat(document.getElementById('largura').value);
-            var altura = parseFloat(document.getElementById('altura').value);
-            var comprimento = parseFloat(document.getElementById('comprimento').value);
-            var pessoas = parseFloat(document.getElementById('pessoas').value);
-            var eletronicos = parseFloat(document.getElementById('eletronicos').value);
-            var exposicao = parseFloat(document.getElementById('exposicao').value);
+            var largura = parseFloat(document.getElementById('largura').value) || 0;
+            var altura = parseFloat(document.getElementById('altura').value) || 0;
+            var comprimento = parseFloat(document.getElementById('comprimento').value) || 0;
+            var pessoas = parseFloat(document.getElementById('pessoas').value) || 0;
+            var eletronicos = parseFloat(document.getElementById('eletronicos').value) || 0;
+            var exposicao = parseFloat(document.getElementById('exposicao').value) || 0;
 
-            // Revisão do cálculo de BTUs
+            // Cálculo da área total do ambiente
             var area = largura * altura * comprimento;
-            var btuBase = area * 500; // Ajuste a constante de BTUs por m³
+
+            // Cálculo básico de BTUs considerando uma fórmula mais precisa
+            var btuBase = area * 600; // BTUs para ambientes, ajustado para a realidade
 
             // Cálculo total de BTUs
             var totalBTUs = btuBase + (pessoas * 600) + (eletronicos * 400) + exposicao;
