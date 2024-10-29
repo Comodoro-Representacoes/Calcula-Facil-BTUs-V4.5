@@ -67,19 +67,19 @@
         <h2>Calculadora de BTUs de Ar Condicionado</h2>
         
         <label>Largura do Ambiente (m):</label>
-        <input type="number" id="largura" value="" min="0" placeholder="Ex: 5">
+        <input type="number" id="largura" min="0" placeholder="Ex: 5">
         
         <label>Altura do Ambiente (m):</label>
-        <input type="number" id="altura" value="" min="0" placeholder="Ex: 3">
+        <input type="number" id="altura" min="0" placeholder="Ex: 3">
         
         <label>Comprimento do Ambiente (m):</label>
-        <input type="number" id="comprimento" value="" min="0" placeholder="Ex: 6">
+        <input type="number" id="comprimento" min="0" placeholder="Ex: 6">
         
         <label>Número de Pessoas:</label>
-        <input type="number" id="pessoas" value="" min="0" placeholder="Ex: 3">
+        <input type="number" id="pessoas" min="0" placeholder="Ex: 3">
         
-        <label>Número de Aparelhos Eletrônicos (computadores, televisores, etc.):</label>
-        <input type="number" id="eletronicos" value="" min="0" placeholder="Ex: 2">
+        <label>Número de Aparelhos Eletrônicos:</label>
+        <input type="number" id="eletronicos" min="0" placeholder="Ex: 2">
         
         <label>Exposição ao Sol:</label>
         <select id="exposicao">
@@ -92,8 +92,8 @@
         <button id="refazer" onclick="refazerCalculo()" style="display:none;" class="refazer">Refazer Cálculo</button>
         
         <div id="resultado" class="result" style="display:none;"></div>
-        <img id="imagemResultado" src="imagem-resultados.png" alt="Resultados" style="display:none; width: 100%; max-width: 200px; margin: 20px auto;"/>
-        <a id="linkDisponibilidade" href="https://beacons.ai/calcula_facil_btus_elgin" target="_blank" style="display:none;">
+        <img id="imagemResultado" src="imagem-resultados.png" alt="Resultado" style="display:none; margin-top: 20px;">
+        <a id="linkConsultar" href="https://beacons.ai/calcula_facil_btus_elgin" style="display:none;">
             <button style="background: #007bff;">Consultar Disponibilidade</button>
         </a>
     </div>
@@ -107,19 +107,18 @@
             var eletronicos = parseFloat(document.getElementById('eletronicos').value);
             var exposicao = parseFloat(document.getElementById('exposicao').value);
 
-            var area = largura * altura * comprimento; // Área em m³
-            var btuBase = area * 600; // BTUs base
+            // Revisão do cálculo de BTUs
+            var area = largura * altura * comprimento;
+            var btuBase = area * 500; // Ajuste a constante de BTUs por m³
 
             // Cálculo total de BTUs
             var totalBTUs = btuBase + (pessoas * 600) + (eletronicos * 400) + exposicao;
-
-            // Arredondamento
             totalBTUs = arredondarBTU(totalBTUs);
 
             document.getElementById('resultado').style.display = 'block';
             document.getElementById('resultado').innerHTML = `Resultado: ${totalBTUs} BTUs`;
             document.getElementById('imagemResultado').style.display = 'block';
-            document.getElementById('linkDisponibilidade').style.display = 'block';
+            document.getElementById('linkConsultar').style.display = 'block';
             document.getElementById('refazer').style.display = 'block';
         }
 
@@ -136,14 +135,15 @@
         function refazerCalculo() {
             document.getElementById('resultado').style.display = 'none';
             document.getElementById('imagemResultado').style.display = 'none';
-            document.getElementById('linkDisponibilidade').style.display = 'none';
+            document.getElementById('linkConsultar').style.display = 'none';
             document.getElementById('refazer').style.display = 'none';
+            // Limpar campos de entrada
             document.getElementById('largura').value = '';
             document.getElementById('altura').value = '';
             document.getElementById('comprimento').value = '';
             document.getElementById('pessoas').value = '';
             document.getElementById('eletronicos').value = '';
-            document.getElementById('exposicao').selectedIndex = 0; // Resetar seleção
+            document.getElementById('exposicao').value = '0'; // Resetar exposição ao sol
         }
     </script>
 </body>
